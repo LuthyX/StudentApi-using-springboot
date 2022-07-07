@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/v1/student")
@@ -29,12 +30,26 @@ public class StudentController {
     studentService.deleteStudent(studentId);
     }
 
-    @PutMapping(path = "update/{studentId}")
-    public void updateStudent(
+//    @PutMapping(path = "update/{studentId}")
+//    public void updateStudent(
+//            @PathVariable ("studentId") Long studentId,
+//            @RequestParam (required = false) String name,
+//            @RequestParam (required = false) String email
+//    ){
+//        studentService.updateStudent(studentId, name, email);
+//    }
+
+    @PutMapping(path = "change/{studentId}")
+    public void changeStudent(
             @PathVariable ("studentId") Long studentId,
-            @RequestParam (required = false) String name,
-            @RequestParam (required = false) String email
+            @RequestBody Student changeStudent
     ){
-        studentService.updateStudent(studentId, name, email);
+        studentService.changeNewStudent(studentId, changeStudent);
+    }
+    @GetMapping(path = "{studentId}")
+    public Optional<Student> getStudentbyId (
+            @PathVariable ("studentId") Long studentId)
+    {
+        return studentService.getStudentById(studentId);
     }
 }
